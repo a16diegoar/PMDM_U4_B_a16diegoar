@@ -3,6 +3,7 @@ package com.example.ud4_b_a16diegoar;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -32,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         comidas.put("Tortilla de patacas", true);
         comidas.put("Polbo á feira", true);
         comidas.put("Pementos de Ṕadrón", false);
-        comidas.put("Lasaña", true);
-        comidas.put("Onigiri", false);
+        comidas.put("Lasaña", false);
+        comidas.put("Onigiri", true);
         comidas.put("Macarróns", false);
         comidas.put("Milanesa de polo", false);
 
@@ -98,5 +99,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         tv.setText(txt);
+    }
+
+    public void btnAddOpt(View v) {
+        EditText txe = findViewById(R.id.txeNovaOpcion);
+
+        comidas.put(txe.getText().toString(), false);
+        txe.setText("");
     }
 }

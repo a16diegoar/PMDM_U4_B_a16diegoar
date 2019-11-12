@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".MainActivity">
 
     <Button
         android:id="@+id/btnShowDial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Abrir opcions"
-        android:onClick="showDialog" />
+        android:onClick="showDialog"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnDialFrag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Abrir opcoións (DF)"
-        android:onClick="showFragment" />
+        android:onClick="showFragment"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnShowDial"/>
+
+    <EditText
+        android:id="@+id/txeNovaOpcion"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnDialFrag"
+        android:hint="Nova comida"/>
+
+    <Button
+        android:id="@+id/btnAddOpt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/txeNovaOpcion"
+        android:layout_below="@id/btnDialFrag"
+        android:text="Engadir"
+        android:onClick="btnAddOpt"/>
 
     <TextView
         android:id="@+id/tvDatos"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/txeNovaOpcion"/>
 
-</LinearLayout>
+</RelativeLayout>
