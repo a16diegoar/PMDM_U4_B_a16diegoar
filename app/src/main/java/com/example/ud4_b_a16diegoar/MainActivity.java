@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     public void showFragment(View v) {
         Fragmento fr = new Fragmento();
         FragmentManager fm = getSupportFragmentManager();
-        fr.recibeMapa(comidas);
         fr.recibeInstancia(this);
         fr.show(fm, "Fragmento");
     }

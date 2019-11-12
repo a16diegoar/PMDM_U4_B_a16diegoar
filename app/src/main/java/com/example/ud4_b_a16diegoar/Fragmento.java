@@ -9,17 +9,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Fragmento extends DialogFragment {
 
     MainActivity ma;
-    HashMap<String, Boolean> comidas;
-
-    public void recibeMapa(HashMap<String, Boolean> comidas) {
-        this.comidas = comidas;
-    }
 
     public void recibeInstancia(MainActivity ma) {
         this.ma = ma;
@@ -29,11 +23,11 @@ public class Fragmento extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        final String[] arrComidas = new String[comidas.size()];
-        boolean[] arrSelec = new boolean[comidas.size()];
+        final String[] arrComidas = new String[ma.comidas.size()];
+        boolean[] arrSelec = new boolean[ma.comidas.size()];
 
         int i = 0;
-        for (Map.Entry<String, Boolean> e : comidas.entrySet()) {
+        for (Map.Entry<String, Boolean> e : ma.comidas.entrySet()) {
             arrComidas[i] = e.getKey();
             arrSelec[i] = e.getValue();
             i++;
@@ -45,7 +39,7 @@ public class Fragmento extends DialogFragment {
         db.setMultiChoiceItems(arrComidas, arrSelec, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                comidas.put(arrComidas[which], isChecked);
+                ma.comidas.put(arrComidas[which], isChecked);
             }
         });
 
