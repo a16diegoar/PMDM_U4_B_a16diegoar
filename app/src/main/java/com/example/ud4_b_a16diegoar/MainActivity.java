@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> comidas = new ArrayList<>();
     public static ArrayList<Boolean> selec = new ArrayList<>();
 
+    //RAMA TESTING
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
