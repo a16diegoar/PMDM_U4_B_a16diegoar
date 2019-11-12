@@ -12,8 +12,15 @@ import androidx.fragment.app.FragmentManager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -25,18 +32,34 @@ public class MainActivity extends AppCompatActivity {
 
     public HashMap<String, Boolean> comidas = new HashMap<>();
 
+    private File file;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        comidas.put("Tortilla de patacas", true);
-        comidas.put("Polbo á feira", true);
-        comidas.put("Pementos de Ṕadrón", false);
-        comidas.put("Lasaña", false);
-        comidas.put("Onigiri", true);
-        comidas.put("Macarróns", false);
-        comidas.put("Milanesa de polo", false);
+        file = new File(getFilesDir().getPath() + "/comidas.dat");
+
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                comidas = (HashMap<String, Boolean>) ois.readObject();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            comidas.put("Tortilla de patacas", true);
+            comidas.put("Polbo á feira", true);
+            comidas.put("Pementos de Ṕadrón", false);
+            comidas.put("Lasaña", false);
+            comidas.put("Onigiri", true);
+            comidas.put("Macarróns", false);
+            comidas.put("Milanesa de polo", false);
+        }
 
         mostrarSeleccion();
     }
@@ -106,5 +129,18 @@ public class MainActivity extends AppCompatActivity {
 
         comidas.put(txe.getText().toString(), false);
         txe.setText("");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file, false))) {
+            oos.writeObject(comidas);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
