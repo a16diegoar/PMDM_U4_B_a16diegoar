@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Fragmento extends DialogFragment {
@@ -23,11 +24,13 @@ public class Fragmento extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        final String[] arrComidas = new String[ma.comidas.size()];
-        boolean[] arrSelec = new boolean[ma.comidas.size()];
+        final HashMap<String, Boolean> comidasTmp = (HashMap<String, Boolean>) ma.comidas.clone();
+
+        final String[] arrComidas = new String[comidasTmp.size()];
+        boolean[] arrSelec = new boolean[comidasTmp.size()];
 
         int i = 0;
-        for (Map.Entry<String, Boolean> e : ma.comidas.entrySet()) {
+        for (Map.Entry<String, Boolean> e : comidasTmp.entrySet()) {
             arrComidas[i] = e.getKey();
             arrSelec[i] = e.getValue();
             i++;
@@ -39,13 +42,14 @@ public class Fragmento extends DialogFragment {
         db.setMultiChoiceItems(arrComidas, arrSelec, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                ma.comidas.put(arrComidas[which], isChecked);
+                comidasTmp.put(arrComidas[which], isChecked);
             }
         });
 
         db.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                ma.comidas = comidasTmp;
                 ma.mostrarSeleccion();
             }
         });
