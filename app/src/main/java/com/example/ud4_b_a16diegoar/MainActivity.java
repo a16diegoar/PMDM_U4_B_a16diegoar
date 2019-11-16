@@ -66,11 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void showDialog(View v) {
 
-        final String[] arrComidas = new String[comidas.size()];
-        boolean[] arrSelec = new boolean[comidas.size()];
+        final HashMap<String, Boolean> comidasTmp = (HashMap<String, Boolean>) comidas.clone();
+
+        final String[] arrComidas = new String[comidasTmp.size()];
+        boolean[] arrSelec = new boolean[comidasTmp.size()];
 
         int i = 0;
-        for (Map.Entry<String, Boolean> e : comidas.entrySet()) {
+        for (Map.Entry<String, Boolean> e : comidasTmp.entrySet()) {
             arrComidas[i] = e.getKey();
             arrSelec[i] = e.getValue();
             i++;
@@ -82,13 +84,14 @@ public class MainActivity extends AppCompatActivity {
         db.setMultiChoiceItems(arrComidas, arrSelec, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                comidas.put(arrComidas[which], isChecked);
+                comidasTmp.put(arrComidas[which], isChecked);
             }
         });
 
         db.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                comidas = comidasTmp;
                 mostrarSeleccion();
             }
         });
